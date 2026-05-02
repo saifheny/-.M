@@ -1,3 +1,4 @@
+--- START OF FILE editor.js ---
 const Editor = {
   isOpen: false, tabs:[], activeTab: null,
   init() { this.renderTabs(); this.setupTextarea(); },
@@ -16,7 +17,6 @@ const Editor = {
       panel.classList.remove('open');
       resizer.style.display = 'none';
       document.querySelectorAll('.editor-toggle-btn').forEach(btn => btn.classList.remove('active'));
-      this.closePreview();
     }
   },
   setupTextarea() {
@@ -135,7 +135,6 @@ const Editor = {
   },
   formatCode() { UI.toast('تم التنسيق التلقائي بنجاح', 'success'); },
   runCode() { UI.toast('تشغيل الكود متاح عبر الـ AI', 'info'); },
-  closePreview() { const overlay = document.getElementById('editor-preview-overlay'); if (overlay) overlay.classList.remove('active'); },
   explainCode() { this.sendToAI('اشرح هذا الكود بالتفصيل بالعربية:'); },
   optimizeCode() { this.sendToAI('حسّن هذا الكود من ناحية الأداء والقراءة:'); },
   fixCode() { this.sendToAI('اكتشف وأصلح الأخطاء في هذا الكود إن وجدت:'); },
@@ -169,4 +168,3 @@ const Editor = {
   replaceText() {}
 };
 window.addEventListener('DOMContentLoaded', () => Editor.init());
-```
