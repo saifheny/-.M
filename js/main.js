@@ -1,86 +1,64 @@
+--- START OF FILE main.js ---
 const Main = {
-  chats: [], currentChatId: null, messages: [], uploadedFiles:[],
-  currentModel: 'gpt-4o', currentMode: 'general', isLoading: false,
+  chats:[], currentChatId: null, messages: [], uploadedFiles:[],
+  currentModel: 'o3-mini', currentMode: 'general', isLoading: false,
   totalStorage: 0, stats: { msgs: 0, chats: 0, tokens: 0 },
   
   systemPrompts: {
-    general: 'أنت AI Agent Pro، مساعد ذكي متطور لعام 2026. يمكنك التحكم بالواجهة عبر: [SET_COLOR:blue/green/red] ولتغيير المظهر [SET_THEME:dark/light/oled]. لتوليد الصور أضف:[IMAGE: description in english]. أجب باحترافية واستخدم Markdown.',
+    general: 'أنت AI Agent Pro، مساعد ذكي متطور لعام 2026. يمكنك التحكم بالواجهة عبر: [SET_COLOR:blue/green/red] ولتغيير المظهر[SET_THEME:dark/light]. أجب باحترافية واستخدم Markdown.',
     code: 'أنت مهندس برمجيات خبير. اكتب كوداً موثقاً ونظيفاً وضع الكود في code blocks مع ذكر لغة البرمجة دائماً.',
     translate: 'أنت مترجم محترف للغات. ترجم بدقة مع مراعاة السياق الثقافي والمصطلحات التقنية.',
     analyze: 'أنت خبير بيانات. حلل البيانات المقدمة بدقة واعرض النتائج في قوائم أو جداول.',
     creative: 'أنت كاتب ومفكر إبداعي. أبدع في نسج القصص وكتابة المقالات بطريقة شيقة.'
   },
 
+  // 2026 Updated Models
   ALL_MODELS: {
     'OpenAI':[
-      { id: 'gpt-4o', name: 'GPT-4 Omni' },
-      { id: 'gpt-4-turbo', name: 'GPT-4 Turbo' },
-      { id: 'gpt-3.5-turbo', name: 'GPT-3.5 Turbo' }
+      { id: 'o3-mini', name: 'o3-mini (المنطق السريع)' },
+      { id: 'o1', name: 'o1 (التحليل العميق)' },
+      { id: 'gpt-4o', name: 'GPT-4o (الرئيسي)' }
     ],
     'Google':[
-      { id: 'gemini-1.5-pro', name: 'Gemini 1.5 Pro' },
-      { id: 'gemini-1.5-flash', name: 'Gemini 1.5 Flash' }
+      { id: 'gemini-2.5-pro', name: 'Gemini 2.5 Pro' },
+      { id: 'gemini-2.5-flash', name: 'Gemini 2.5 Flash' }
     ],
     'Anthropic':[
-      { id: 'claude-3-opus', name: 'Claude 3 Opus' },
-      { id: 'claude-3-5-sonnet', name: 'Claude 3.5 Sonnet' }
+      { id: 'claude-3-7-sonnet', name: 'Claude 3.7 Sonnet' },
+      { id: 'claude-3-5-opus', name: 'Claude 3.5 Opus' }
     ],
-    'Meta (Groq)':[
-      { id: 'llama-3-70b', name: 'Llama 3 70B' },
-      { id: 'llama-3-8b', name: 'Llama 3 8B' }
+    'Meta / Groq':[
+      { id: 'llama-4-90b', name: 'Llama 4 90B' },
+      { id: 'llama-3.3-70b', name: 'Llama 3.3 70B' }
     ],
     'Mistral':[
-      { id: 'mistral-large', name: 'Mistral Large' }
-    ],
-    'Cohere':[
-      { id: 'command-r-plus', name: 'Command R+' }
-    ],
-    'HuggingFace':[
-      { id: 'zephyr-7b', name: 'Zephyr 7B' }
+      { id: 'mistral-large-2', name: 'Mistral Large 2' }
     ]
   },
 
   init() {
     this.loadData();
-    this.populateModels();
     this.newChat();
     this.setupInput();
     this.setupScrollWatcher();
     this.recoverInput();
   },
 
-  populateModels() {
-    const select = document.getElementById('chat-model-select');
-    if(!select) return;
-    let html = '';
-    for(const [provider, models] of Object.entries(this.ALL_MODELS)) {
-       html += `<optgroup label="${provider}">`;
-       models.forEach(m => { html += `<option value="${m.id}">${m.name}</option>`; });
-       html += `</optgroup>`;
-    }
-    select.innerHTML = html;
-    const saved = localStorage.getItem('selected_model');
-    if(saved) {
-      this.currentModel = saved;
-      select.value = saved;
-    } else {
-      select.value = this.currentModel;
-    }
-  },
-
   setModel(modelId) {
     this.currentModel = modelId;
     localStorage.setItem('selected_model', modelId);
-    UI.toast(`تم التبديل إلى النموذج ${modelId}`, 'success');
+    UI.toast(`تم تعيين النموذج الافتراضي للمحادثة إلى ${modelId}`, 'success');
   },
 
   loadData() {
     try {
       this.chats = JSON.parse(localStorage.getItem('ai_chats_pro') || '[]');
       this.stats = JSON.parse(localStorage.getItem('ai_stats_pro') || '{"msgs":0,"chats":0,"tokens":0}');
-      this.updateStatsUI();
       const customPrompt = localStorage.getItem('custom_prompt');
       if (customPrompt) document.getElementById('custom-system-prompt').value = customPrompt;
+      
+      const savedModel = localStorage.getItem('selected_model');
+      if (savedModel) this.currentModel = savedModel;
     } catch(e) { console.error("Error loading data", e); }
   },
 
@@ -105,9 +83,7 @@ const Main = {
     const chat = { id, title: 'محادثة جديدة', messages:[], timestamp: Date.now(), starred: false };
     this.chats.unshift(chat);
     this.currentChatId = id; this.messages =[]; this.stats.chats++; this.saveData();
-    this.renderChatList(); this.renderMessages(); this.updateStatsUI();
-    const ht = document.getElementById('current-chat-title');
-    if (ht) ht.textContent = 'محادثة جديدة';
+    this.renderChatList(); this.renderMessages();
     document.getElementById('welcome-screen').style.display = 'flex';
   },
 
@@ -115,22 +91,9 @@ const Main = {
     const chat = this.chats.find(c => c.id === id);
     if (!chat) return;
     this.currentChatId = id; this.messages = chat.messages ||[];
-    const ht = document.getElementById('current-chat-title');
-    if (ht) ht.textContent = chat.title;
-    const starBtn = document.getElementById('star-btn');
-    if (starBtn) starBtn.classList.toggle('starred', chat.starred);
     this.renderChatList(); this.renderMessages();
     if (this.messages.length > 0) document.getElementById('welcome-screen').style.display = 'none';
     if (window.innerWidth <= 768) UI.toggleSidebar();
-  },
-
-  starChat() {
-    const chat = this.chats.find(c => c.id === this.currentChatId);
-    if (!chat) return;
-    chat.starred = !chat.starred;
-    document.getElementById('star-btn').classList.toggle('starred', chat.starred);
-    this.renderChatList(); this.saveData();
-    UI.toast(chat.starred ? 'تم التمييز بنجمة' : 'تم إزالة التمييز', 'info');
   },
 
   renderChatList() {
@@ -152,13 +115,6 @@ const Main = {
     UI.toast('تم حذف المحادثة', 'info');
   },
 
-  searchHistory(query) {
-    if (!query) { this.renderChatList(); return; }
-    const q = query.toLowerCase();
-    const filtered = this.chats.filter(c => c.title.toLowerCase().includes(q));
-    document.getElementById('chat-list').innerHTML = filtered.map(c => `<div class="chat-item ${c.id === this.currentChatId ? 'active' : ''}" onclick="Main.loadChat('${c.id}')"><div class="chat-item-title">${this.escHtml(c.title)}</div></div>`).join('');
-  },
-
   setupInput() {
     const input = document.getElementById('chat-input');
     input.addEventListener('keydown', (e) => {
@@ -171,30 +127,29 @@ const Main = {
   },
 
   getApiConfig(modelId) {
+    // Advanced 2026 Mapping
     const modelsMap = {
+      'o3-mini': { p: 'openai', url: 'https://api.openai.com/v1/chat/completions', id: 'o3-mini' },
+      'o1': { p: 'openai', url: 'https://api.openai.com/v1/chat/completions', id: 'o1' },
       'gpt-4o': { p: 'openai', url: 'https://api.openai.com/v1/chat/completions', id: 'gpt-4o' },
-      'gpt-4-turbo': { p: 'openai', url: 'https://api.openai.com/v1/chat/completions', id: 'gpt-4-turbo' },
-      'gpt-3.5-turbo': { p: 'openai', url: 'https://api.openai.com/v1/chat/completions', id: 'gpt-3.5-turbo' },
-      'gemini-1.5-pro': { p: 'google', url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions', id: 'gemini-1.5-pro' },
-      'gemini-1.5-flash': { p: 'google', url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions', id: 'gemini-1.5-flash' },
-      'claude-3-opus': { p: 'anthropic', url: 'https://api.anthropic.com/v1/messages', id: 'claude-3-opus-20240229' },
-      'claude-3-5-sonnet': { p: 'anthropic', url: 'https://api.anthropic.com/v1/messages', id: 'claude-3-5-sonnet-20240620' },
-      'llama-3-70b': { p: 'groq', url: 'https://api.groq.com/openai/v1/chat/completions', id: 'llama3-70b-8192' },
-      'llama-3-8b': { p: 'groq', url: 'https://api.groq.com/openai/v1/chat/completions', id: 'llama3-8b-8192' },
-      'mistral-large': { p: 'mistral', url: 'https://api.mistral.ai/v1/chat/completions', id: 'mistral-large-latest' },
-      'command-r-plus': { p: 'cohere', url: 'https://api.cohere.ai/v1/chat', id: 'command-r-plus' },
-      'zephyr-7b': { p: 'huggingface', url: 'https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta/v1/chat/completions', id: 'HuggingFaceH4/zephyr-7b-beta' }
+      'gemini-2.5-pro': { p: 'google', url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions', id: 'gemini-2.5-pro' },
+      'gemini-2.5-flash': { p: 'google', url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions', id: 'gemini-2.5-flash' },
+      'claude-3-7-sonnet': { p: 'anthropic', url: 'https://api.anthropic.com/v1/messages', id: 'claude-3-7-sonnet-20250219' },
+      'claude-3-5-opus': { p: 'anthropic', url: 'https://api.anthropic.com/v1/messages', id: 'claude-3-5-opus-20241022' },
+      'llama-4-90b': { p: 'groq', url: 'https://api.groq.com/openai/v1/chat/completions', id: 'llama-4-90b-versatile' },
+      'llama-3.3-70b': { p: 'groq', url: 'https://api.groq.com/openai/v1/chat/completions', id: 'llama-3.3-70b-versatile' },
+      'mistral-large-2': { p: 'mistral', url: 'https://api.mistral.ai/v1/chat/completions', id: 'mistral-large-latest' }
     };
 
     if (modelId === 'default') {
-      if (localStorage.getItem('api_key_groq')) return this.getApiConfig('llama-3-70b');
-      if (localStorage.getItem('api_key_openai')) return this.getApiConfig('gpt-3.5-turbo');
-      if (localStorage.getItem('api_key_google')) return this.getApiConfig('gemini-1.5-flash');
+      if (localStorage.getItem('api_key_groq')) return this.getApiConfig('llama-3.3-70b');
+      if (localStorage.getItem('api_key_openai')) return this.getApiConfig('gpt-4o');
+      if (localStorage.getItem('api_key_google')) return this.getApiConfig('gemini-2.5-flash');
       return { actualModelId: 'mock', apiKey: null, family: 'mock' };
     }
 
     let mapped = modelsMap[modelId];
-    if(!mapped) mapped = modelsMap['gpt-3.5-turbo'];
+    if(!mapped) mapped = modelsMap['gpt-4o'];
 
     return {
       apiUrl: mapped.url, apiKey: localStorage.getItem(`api_key_${mapped.p}`),
@@ -208,7 +163,7 @@ const Main = {
     if (modelId === 'default' && (!config.apiKey || config.family === 'mock')) {
        return new Promise((resolve) => {
          setTimeout(() => {
-           resolve("💡 **النموذج الافتراضي (محاكاة):** يبدو أن جميع النماذج فشلت أو لم تقم بإضافة مفاتيح API بعد.\n\nيرجى الذهاب إلى **الإعدادات > الشركات (API)** لإضافة مفتاح واحد على الأقل لفتح القدرات الكاملة للمنصة (مثل مفتاح OpenAI أو Google أو Groq المجاني).");
+           resolve("💡 **تنبيه هام:** يبدو أنك لم تقم بإضافة مفاتيح API الخاصة بالشركات بعد.\n\nيرجى النقر على زر **الشركات (API)** في الأسفل (أيقونة المفتاح) لإضافة مفتاحك والمتابعة بنجاح.");
          }, 1000);
        });
     }
@@ -218,14 +173,11 @@ const Main = {
     let bodyParams = { model: config.actualModelId, messages: messages, temperature: temp, max_tokens: maxTok };
     let headers = { 'Authorization': `Bearer ${config.apiKey}`, 'Content-Type': 'application/json' };
 
+    // Handle Anthropic Format
     if (config.family === 'anthropic') {
         const sysMsg = messages.find(m => m.role === 'system')?.content || '';
         bodyParams = { model: config.actualModelId, system: sysMsg, messages: messages.filter(m => m.role !== 'system').map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content })), max_tokens: maxTok, temperature: temp };
         delete headers['Authorization']; headers['x-api-key'] = config.apiKey; headers['anthropic-version'] = '2023-06-01'; headers['anthropic-dangerous-direct-browser-access'] = 'true';
-    }
-
-    if(config.family === 'huggingface') {
-       bodyParams = { model: config.actualModelId, messages: messages, max_tokens: maxTok, temperature: temp };
     }
 
     const response = await fetch(config.apiUrl, { method: 'POST', headers: headers, body: JSON.stringify(bodyParams) });
@@ -236,7 +188,7 @@ const Main = {
         if(response.status === 401) reason = 'المفتاح غير صحيح أو منتهي الصلاحية';
         else if(response.status === 402) reason = 'رصيد الحساب غير كافٍ للتشغيل';
         else if(response.status === 429) reason = 'تم تجاوز حد الطلبات المسموح به (Rate Limit)';
-        else if(response.status === 403) reason = 'غير مصرح للوصول (قد يمنع المزود الاتصال المباشر من المتصفح CORS)';
+        else if(response.status === 403) reason = 'غير مصرح للوصول للمنطقة الجغرافية (جرب VPN)';
         throw new Error(errData.error?.message || reason);
     }
 
@@ -253,9 +205,10 @@ const Main = {
     let text = input.value.trim();
     if (!text && !this.uploadedFiles.length) return;
 
-    // Check for inline model command
+    // Model command overriding
     const modelCommandRegex = /^استخدم\s+(.+)$/i;
     const match = text.match(modelCommandRegex);
+    let targetModel = this.currentModel;
     if(match) {
        const requestedModel = match[1].toLowerCase();
        let found = null;
@@ -267,8 +220,8 @@ const Main = {
        }
        if(found) {
            this.setModel(found);
-           document.getElementById('chat-model-select').value = found;
-           this.appendMessage({role: 'assistant', content: `✅ تم التحويل بنجاح إلى نموذج: **${found}**`, time: this.now()}, true);
+           targetModel = found;
+           this.appendMessage({role: 'assistant', content: `✅ يتم الآن استخدام نموذج: **${found}** كما طلبت.`, time: this.now()}, true);
            input.value = '';
            if(text === match[0]) return;
        }
@@ -291,12 +244,10 @@ const Main = {
     const chat = this.chats.find(c => c.id === this.currentChatId);
     if (chat && chat.title === 'محادثة جديدة') {
       chat.title = text ? text.substring(0, 30) + '...' : 'محادثة جديدة';
-      const ht = document.getElementById('current-chat-title');
-      if (ht) ht.textContent = chat.title;
       this.renderChatList();
     }
 
-    this.stats.msgs++; this.updateStatsUI();
+    this.stats.msgs++;
     this.isLoading = true; document.getElementById('send-btn').disabled = true;
     const typingUI = this.showTyping();
 
@@ -307,29 +258,28 @@ const Main = {
     const temp = parseFloat(document.getElementById('temp-slider')?.value) || 0.7;
     const maxTok = parseInt(document.getElementById('max-tokens')?.value) || 4096;
 
-    let targetModel = this.currentModel;
     try {
         let aiContent = await this.callApi(targetModel, apiMessages, temp, maxTok);
         aiContent = this.extractCodeBlocks(aiContent);
-        const aiMsg = { role: 'assistant', content: aiContent, time: this.now() };
+        const aiMsg = { role: 'assistant', content: aiContent, time: this.now(), usedModel: targetModel };
         this.messages.push(aiMsg);
         typingUI.remove();
         this.appendMessage(aiMsg, true);
     } catch (err) {
         typingUI.remove();
-        const errDiv = {role: 'assistant', content: `⚠️ **فشل الاتصال بالنموذج ${targetModel}:**\n${err.message}\n\n*جاري التحويل للنموذج الافتراضي...*`, time: this.now()};
+        const errDiv = {role: 'assistant', content: `⚠️ **فشل الاتصال بالنموذج ${targetModel}:**\n${err.message}\n\n*جاري التحويل للنموذج الافتراضي...*`, time: this.now(), usedModel: targetModel};
         this.messages.push(errDiv); this.appendMessage(errDiv, true);
         
         try {
             const typingUI2 = this.showTyping();
             let aiContentFallback = await this.callApi('default', apiMessages, temp, maxTok);
             aiContentFallback = this.extractCodeBlocks(aiContentFallback);
-            const aiMsg = { role: 'assistant', content: aiContentFallback, time: this.now() };
+            const aiMsg = { role: 'assistant', content: aiContentFallback, time: this.now(), usedModel: 'fallback-default' };
             this.messages.push(aiMsg);
             typingUI2.remove();
             this.appendMessage(aiMsg, true);
         } catch(fallbackErr) {
-            const finalErr = {role: 'assistant', content: `❌ **عذراً، جميع المحاولات فشلت.**\nيرجى التأكد من إضافة مفاتيح الـ API في الإعدادات، أو التأكد من اتصالك بالإنترنت.`, time: this.now()};
+            const finalErr = {role: 'assistant', content: `❌ **عذراً، جميع المحاولات فشلت.**\nيرجى التأكد من إضافة مفاتيح الـ API، أو التأكد من اتصالك بالإنترنت.`, time: this.now(), usedModel: 'error'};
             this.messages.push(finalErr); this.appendMessage(finalErr, true);
         }
     }
@@ -382,16 +332,33 @@ const Main = {
     
     htmlContent = isUser ? this.escHtml(msg.display || msg.content) : this.formatAI(msg.content || '');
     let filesHtml = msg.files && msg.files.length ? `<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">` + msg.files.map(f => `<span class="attachment-chip"><i data-lucide="paperclip" style="width:12px;height:12px"></i>${this.escHtml(f)}</span>`).join('') + `</div>` : '';
-    const safeContent = encodeURIComponent(msg.content || '');
-    const copyBtnHtml = !isUser ? `<button class="msg-copy-btn" onclick="navigator.clipboard.writeText(decodeURIComponent('${safeContent}')); UI.toast('تم النسخ', 'success')"><i data-lucide="copy" style="width:14px;height:14px"></i></button>` : '';
+    
+    // Build Model Selection options inside the message actions
+    let modelOptionsHtml = '';
+    for (const [provider, models] of Object.entries(this.ALL_MODELS)) {
+      modelOptionsHtml += `<optgroup label="${provider}">`;
+      models.forEach(m => {
+        modelOptionsHtml += `<option value="${m.id}" ${this.currentModel === m.id ? 'selected' : ''}>${m.name}</option>`;
+      });
+      modelOptionsHtml += `</optgroup>`;
+    }
 
     div.innerHTML = `
       <div class="msg-avatar ${isUser ? 'user' : 'ai'}">${isUser ? 'أ' : '<i data-lucide="bot" style="width:20px;height:20px"></i>'}</div>
       <div class="msg-body">
-        <div class="msg-bubble ${isUser ? 'user' : 'ai'}">${copyBtnHtml}${filesHtml}${htmlContent}</div>
+        <div class="msg-bubble ${isUser ? 'user' : 'ai'}">${filesHtml}${htmlContent}</div>
         <div class="msg-meta">
-          <span class="msg-time">${msg.time}</span>
-          ${!isUser ? `<div class="msg-actions"><button class="msg-action-btn" title="نسخ" onclick="navigator.clipboard.writeText(decodeURIComponent('${safeContent}')); UI.toast('تم النسخ', 'success')"><i data-lucide="copy" style="width:14px;height:14px"></i></button></div>` : ''}
+          <span class="msg-time">${msg.time} ${!isUser && msg.usedModel ? `· ${msg.usedModel}` : ''}</span>
+          ${!isUser ? `
+          <div class="msg-actions">
+            <button class="msg-action-btn" title="أعجبني" onclick="UI.toast('شكرًا لتقييمك الإيجابي!', 'success')"><i data-lucide="thumbs-up" style="width:14px;height:14px"></i></button>
+            <button class="msg-action-btn" title="لم يعجبني" onclick="UI.toast('تم تسجيل التقييم', 'info')"><i data-lucide="thumbs-down" style="width:14px;height:14px"></i></button>
+            <button class="msg-action-btn" title="نسخ" onclick="navigator.clipboard.writeText(this.closest('.msg-body').querySelector('.msg-bubble').innerText); UI.toast('تم النسخ', 'success')"><i data-lucide="copy" style="width:14px;height:14px"></i></button>
+            <select class="settings-select" onchange="Main.setModel(this.value)" style="width:auto; max-width: 140px; height:28px; padding:0 8px; font-size:11px; border-radius:6px; background:var(--bg3); border:1px solid var(--border); color:var(--text); cursor:pointer;">
+              <option value="" disabled>النموذج القادم:</option>
+              ${modelOptionsHtml}
+            </select>
+          </div>` : ''}
         </div>
       </div>
     `;
@@ -444,7 +411,6 @@ const Main = {
   },
 
   quickPrompt(text) { document.getElementById('chat-input').value = text; this.sendMessage(); },
-  updateStatsUI() {},
   now() { return new Date().toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' }); },
   escHtml(s) { if (!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); },
   scrollToBottom() { const msgs = document.getElementById('messages'); msgs.scrollTo({ top: msgs.scrollHeight, behavior: 'smooth' }); },
