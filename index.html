@@ -1,9 +1,10 @@
+--- START OF FILE index.html ---
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>AI Agent Pro - Ultimate Platform</title>
+  <title>AI Agent Pro - Ultimate Platform 2026</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -14,6 +15,26 @@
 </head>
 <body class="theme-dark">
 
+  <!-- Elegant API Setup Modal (Full Screen Onboarding) -->
+  <div class="api-setup-overlay" id="api-setup-modal">
+    <div class="api-setup-container">
+      <div class="api-setup-header">
+        <div class="api-setup-icon"><i data-lucide="cpu" style="width:32px;height:32px;"></i></div>
+        <h2>تهيئة بيئة العمل المتقدمة</h2>
+        <p>اربط المنصة بأقوى نماذج الذكاء الاصطناعي في العالم لعام 2026. أضف مفتاحاً واحداً على الأقل للبدء.</p>
+      </div>
+      
+      <div class="api-cards-grid" id="api-cards-grid">
+        <!-- Cards will be injected via JS -->
+      </div>
+      
+      <div class="api-setup-footer">
+        <button class="btn-outline" onclick="UI.closeApiSetup()" style="padding: 12px 24px; font-weight: 700;">الدخول للتصفح فقط</button>
+        <button class="btn-primary" onclick="UI.closeApiSetup()" style="padding: 12px 32px; font-size: 15px;">بدء الاستخدام <i data-lucide="arrow-left" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:8px;"></i></button>
+      </div>
+    </div>
+  </div>
+
   <button class="icon-btn floating-btn right" onclick="UI.toggleSidebar()" title="القائمة الشاملة" style="width:50px; height:50px; background: rgba(15,15,15,0.8); border:1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); z-index:99;">
     <i data-lucide="menu" style="width:24px;height:24px"></i>
   </button>
@@ -23,37 +44,29 @@
     <div class="nav-icons">
       <button class="nav-btn active" onclick="UI.openTool('general')" title="المحادثات" id="nav-general">
         <i data-lucide="message-square" style="width:18px;height:18px"></i>
-        <span class="tooltip">المحادثات</span>
       </button>
       <button class="nav-btn" onclick="UI.openTool('coding')" title="برمجة" id="nav-coding">
         <i data-lucide="code-2" style="width:18px;height:18px"></i>
-        <span class="tooltip">محرر الكود</span>
       </button>
       <button class="nav-btn" onclick="UI.openTool('analyze')" title="تحليل" id="nav-analyze">
         <i data-lucide="bar-chart-2" style="width:18px;height:18px"></i>
-        <span class="tooltip">تحليل البيانات</span>
       </button>
       <button class="nav-btn" onclick="UI.openTool('translate')" title="ترجمة" id="nav-translate">
         <i data-lucide="languages" style="width:18px;height:18px"></i>
-        <span class="tooltip">ترجمة</span>
       </button>
       <button class="nav-btn" onclick="UI.openTool('creative')" title="إبداعي" id="nav-creative">
         <i data-lucide="pen-tool" style="width:18px;height:18px"></i>
-        <span class="tooltip">كتابة إبداعية</span>
-      </button>
-      <button class="nav-btn" onclick="UI.toggleToolsPanel()" title="الأدوات" id="nav-tools">
-        <i data-lucide="box" style="width:18px;height:18px"></i>
-        <span class="tooltip">الأدوات والملفات</span>
       </button>
     </div>
     <div class="nav-bottom">
+      <button class="nav-btn" onclick="UI.openApiSetup()" title="الشركات (API)">
+        <i data-lucide="key" style="width:18px;height:18px"></i>
+      </button>
       <button class="nav-btn" onclick="UI.toggleTheme()" id="theme-btn" title="المظهر">
         <i data-lucide="sun" style="width:18px;height:18px" id="theme-icon"></i>
-        <span class="tooltip">تبديل المظهر</span>
       </button>
       <button class="nav-btn" onclick="UI.showModal('settings-modal')" title="الإعدادات">
         <i data-lucide="settings" style="width:18px;height:18px"></i>
-        <span class="tooltip">الإعدادات</span>
       </button>
       <div class="nav-avatar" onclick="UI.showModal('settings-modal')">A</div>
     </div>
@@ -92,15 +105,15 @@
           <i data-lucide="grid" style="width:16px;height:16px;"></i> الأدوات والإعدادات
         </h3>
         
-        <div class="tool-card" onclick="UI.showModal('settings-modal'); UI.switchSettingsTab('providers'); UI.toggleSidebar();" style="background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.05); padding:14px; margin-bottom:8px; border-radius:14px;">
+        <div class="tool-card" onclick="UI.openApiSetup(); UI.toggleSidebar();" style="background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.05); padding:14px; margin-bottom:8px; border-radius:14px;">
           <div class="tool-icon bg-green text-green" style="width:40px;height:40px; border-radius:12px;"><i data-lucide="cpu" style="width:20px;height:20px"></i></div>
           <div class="tool-info">
-            <div class="tool-name" style="font-size:14px;">الشركات المتقدمة (APIs)</div>
-            <div class="tool-desc" style="font-size:12px;">إدارة مفاتيح OpenAI, Google...</div>
+            <div class="tool-name" style="font-size:14px;">إدارة المفاتيح (APIs)</div>
+            <div class="tool-desc" style="font-size:12px;">ربط OpenAI, Google وغيرها</div>
           </div>
         </div>
         
-        <div class="tool-card" onclick="UI.showModal('settings-modal'); UI.switchSettingsTab('ai'); UI.toggleSidebar();" style="background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.05); padding:14px; margin-bottom:8px; border-radius:14px;">
+        <div class="tool-card" onclick="UI.showModal('settings-modal'); UI.toggleSidebar();" style="background:rgba(0,0,0,0.2); border:1px solid rgba(255,255,255,0.05); padding:14px; margin-bottom:8px; border-radius:14px;">
           <div class="tool-icon bg-indigo text-indigo" style="width:40px;height:40px; border-radius:12px;"><i data-lucide="settings" style="width:20px;height:20px"></i></div>
           <div class="tool-info">
             <div class="tool-name" style="font-size:14px;">الإعدادات العامة</div>
@@ -234,9 +247,6 @@
             <i data-lucide="trash-2" style="width:14px;height:14px"></i>
           </button>
         </div>
-        <div class="editor-breadcrumbs" id="editor-breadcrumbs">
-          <i data-lucide="folder" style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-left:4px"></i> <span id="breadcrumb-path">لا يوجد ملف</span>
-        </div>
         
         <div class="editor-body">
           <div class="search-replace-panel" id="search-replace-panel">
@@ -262,19 +272,6 @@
 
       <div class="chat-panel">
         
-        <div class="chat-top-header" style="display:flex; justify-content:space-between; align-items:center; padding: 16px 24px; background: rgba(10,10,10,0.5); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); z-index: 10;">
-           <div class="chat-info" style="display:flex; align-items:center; gap: 12px;">
-              <h3 id="current-chat-title" style="margin:0; font-size: 16px; font-weight: 700; color: var(--text);">محادثة جديدة</h3>
-              <button class="icon-btn" id="star-btn" onclick="Main.starChat()"><i data-lucide="star" style="width: 16px; height: 16px;"></i></button>
-           </div>
-           <div class="chat-model-select-wrapper" style="display:flex; align-items:center; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 4px 12px; gap: 8px; transition: all 0.3s ease;">
-              <i data-lucide="cpu" style="width: 16px; height: 16px; color: var(--text3);"></i>
-              <select id="chat-model-select" onchange="Main.setModel(this.value)" style="border: none; background: transparent; font-weight: bold; cursor: pointer; color: var(--text); outline: none; font-family: 'Cairo', sans-serif;">
-                  <!-- Options populated dynamically by JS -->
-              </select>
-           </div>
-        </div>
-
         <div class="messages" id="messages">
           
           <div class="welcome" id="welcome-screen">
@@ -282,7 +279,7 @@
               <i data-lucide="bot" style="width:36px;height:36px;color:var(--accent2)"></i>
             </div>
             <h1>مرحباً بك في <span class="gradient-text">AI Agent Pro</span></h1>
-            <p>المنصة المتكاملة للذكاء الاصطناعي. اسأل، برمج، حلل البيانات، وأنجز مهامك بكفاءة عالية. اختر الشركة (OpenAI, Google...) من زر الإعدادات!</p>
+            <p>المنصة المتكاملة للذكاء الاصطناعي لعام 2026. اسأل، برمج، حلل البيانات، وأنجز مهامك بكفاءة عالية. النماذج متاحة في خيارات كل رسالة!</p>
             
             <div class="quick-prompts">
               <div class="quick-prompt" onclick="Main.quickPrompt('اكتب كود Python لترتيب قائمة بخوارزمية Quick Sort مع شرح كل خطوة')">
@@ -290,12 +287,12 @@
                 <div class="quick-prompt-title">مساعد برمجي</div>
                 <div class="quick-prompt-sub">كتابة وتحسين الكود</div>
               </div>
-              <div class="quick-prompt" onclick="Main.quickPrompt('استخدم GPT-4 واشرح لي مفهوم الشبكات العصبية التوليدية بطريقة بسيطة مع أمثلة')">
+              <div class="quick-prompt" onclick="Main.quickPrompt('استخدم Claude 3.7 واشرح لي مفهوم الشبكات العصبية التوليدية بطريقة بسيطة مع أمثلة')">
                 <div class="quick-prompt-icon"><i data-lucide="brain" style="width:24px;height:24px;color:var(--indigo)"></i></div>
-                <div class="quick-prompt-title">شرح مفاهيم (عبر GPT-4)</div>
+                <div class="quick-prompt-title">شرح مفاهيم (عبر Claude)</div>
                 <div class="quick-prompt-sub">تبسيط التقنية باستخدام الأوامر</div>
               </div>
-              <div class="quick-prompt" onclick="Main.quickPrompt('استخدم Gemini-1.5-Pro لترجمة النص التالي إلى الإنجليزية مع شرح المصطلحات التقنية')">
+              <div class="quick-prompt" onclick="Main.quickPrompt('استخدم Gemini 2.5 لترجمة النص التالي إلى الإنجليزية مع شرح المصطلحات التقنية')">
                 <div class="quick-prompt-icon"><i data-lucide="languages" style="width:24px;height:24px;color:var(--cyan)"></i></div>
                 <div class="quick-prompt-title">ترجمة ذكية (عبر Gemini)</div>
                 <div class="quick-prompt-sub">تحديد النموذج بالكتابة</div>
@@ -324,7 +321,7 @@
               <button class="icon-btn" onclick="Main.toggleVoice()" id="voice-btn" title="إدخال صوتي">
                 <i data-lucide="mic" style="width:18px;height:18px"></i>
               </button>
-              <textarea id="chat-input" rows="1" placeholder="اسأل أي شيء... أو اكتب 'استخدم GPT-4' (Enter للإرسال، Shift+Enter لسطر جديد)"></textarea>
+              <textarea id="chat-input" rows="1" placeholder="اسأل أي شيء... أو اكتب 'استخدم o3-mini' (Enter للإرسال، Shift+Enter لسطر جديد)"></textarea>
               <button class="icon-btn editor-toggle-btn" onclick="Editor.toggleSplitScreen()" id="editor-toggle-btn" title="محرر الكود">
                 <i data-lucide="code-2" style="width:18px;height:18px"></i>
               </button>
@@ -339,7 +336,6 @@
                 <div class="input-tag" onclick="Main.setMode('code')" id="tag-code"><i data-lucide="code-2" style="width:12px;height:12px"></i> <span>برمجة</span></div>
                 <div class="input-tag" onclick="Main.setMode('translate')" id="tag-translate"><i data-lucide="languages" style="width:12px;height:12px"></i> <span>ترجمة</span></div>
                 <div class="input-tag" onclick="Main.setMode('creative')" id="tag-creative"><i data-lucide="sparkles" style="width:12px;height:12px"></i> <span>إبداعي</span></div>
-                <div class="input-tag" onclick="Main.setMode('analyze')" id="tag-analyze"><i data-lucide="bar-chart-2" style="width:12px;height:12px"></i> <span>تحليل</span></div>
                 <div class="input-tag toggle-tag" id="web-search-toggle" onclick="this.classList.toggle('active'); UI.toast(this.classList.contains('active') ? 'تم تفعيل البحث في الويب 🌐' : 'تم إيقاف البحث في الويب', this.classList.contains('active') ? 'success' : 'info')">
                   <i data-lucide="globe" style="width:12px;height:12px"></i> <span>بحث الويب</span>
                 </div>
@@ -355,24 +351,19 @@
   <input type="file" id="file-input" multiple accept=".pdf,.txt,.py,.js,.ts,.json,.html,.css,.md,.png,.jpg,.jpeg,.csv" style="display:none;" onchange="Main.handleFiles(this.files)">
 
   <div class="modal-overlay" id="settings-modal" onclick="UI.closeModalOutside(event,'settings-modal')">
-    <div class="modal" style="width:600px; max-width:95%;">
+    <div class="modal" style="width:500px; max-width:95%;">
       <div class="modal-header">
-        <div class="modal-title">الإعدادات المتقدمة</div>
+        <div class="modal-title">الإعدادات العامة</div>
         <button onclick="UI.closeModal('settings-modal')" class="icon-btn"><i data-lucide="x" style="width:20px;height:20px"></i></button>
       </div>
       
       <div class="settings-tabs">
-        <div class="settings-tab active" onclick="UI.switchSettingsTab('providers')">الشركات (API)</div>
-        <div class="settings-tab" onclick="UI.switchSettingsTab('ai')">الذكاء الاصطناعي</div>
+        <div class="settings-tab active" onclick="UI.switchSettingsTab('ai')">الذكاء الاصطناعي</div>
         <div class="settings-tab" onclick="UI.switchSettingsTab('theme')">المظهر</div>
         <div class="settings-tab" onclick="UI.switchSettingsTab('data')">البيانات</div>
       </div>
 
-      <div class="modal-body" id="settings-body-providers" style="padding: 16px;">
-        <!-- Provider Cards Injected via JS -->
-      </div>
-
-      <div class="modal-body" id="settings-body-ai" style="display:none;">
+      <div class="modal-body" id="settings-body-ai">
         <div class="settings-group">
           <label class="settings-label">التوجيه المخصص (System Prompt)</label>
           <textarea id="custom-system-prompt" class="settings-input" rows="3" placeholder="أدخل توجيه مخصص لنموذج الذكاء الاصطناعي ليتبعه دائماً..."></textarea>
@@ -389,16 +380,6 @@
             <option value="4096" selected>4096 (مثالي)</option>
             <option value="8192">8192 (للنصوص الطويلة)</option>
           </select>
-        </div>
-        <div class="settings-group mt-3">
-          <label class="settings-label">مفتاح ElevenLabs (للنطق الصوتي السينمائي)</label>
-          <div style="position:relative;">
-            <input type="password" id="elevenlabs-key-input" class="settings-input" placeholder="أدخل مفتاح ElevenLabs (اختياري)..." style="padding-right: 36px;">
-            <i data-lucide="key" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); color:var(--text3); width:16px; height:16px"></i>
-            <button class="icon-btn" onclick="UI.toggleApiVisibility('elevenlabs-key-input', 'elevenlabs-eye-icon')" style="position:absolute; left:8px; top:50%; transform:translateY(-50%); width:24px; height:24px;">
-              <i data-lucide="eye" id="elevenlabs-eye-icon" style="width:14px; height:14px;"></i>
-            </button>
-          </div>
         </div>
       </div>
 
@@ -441,18 +422,6 @@
             <div class="theme-option" data-theme="oled" onclick="UI.setTheme('oled')" style="padding: 12px; border-radius: 12px; border: 2px solid var(--border); cursor: pointer; text-align: center; transition: all 0.2s; background: #000;">
               <div style="font-size: 12px; font-weight: 700; color: #fff;">OLED</div>
             </div>
-            <div class="theme-option" data-theme="high-contrast" onclick="UI.setTheme('high-contrast')" style="padding: 12px; border-radius: 12px; border: 2px solid #000; cursor: pointer; text-align: center; transition: all 0.2s; background: #fff;">
-              <div style="font-size: 12px; font-weight: 700; color: #000;">Contrast</div>
-            </div>
-            <div class="theme-option" data-theme="vscode" onclick="UI.setTheme('vscode')" style="padding: 12px; border-radius: 12px; border: 2px solid var(--border); cursor: pointer; text-align: center; transition: all 0.2s; background: #1E1E1E;">
-              <div style="font-size: 12px; font-weight: 700; color: #007ACC;">VS Code</div>
-            </div>
-            <div class="theme-option" data-theme="github" onclick="UI.setTheme('github')" style="padding: 12px; border-radius: 12px; border: 2px solid #D0D7DE; cursor: pointer; text-align: center; transition: all 0.2s; background: #F6F8FA;">
-              <div style="font-size: 12px; font-weight: 700; color: #0969DA;">GitHub</div>
-            </div>
-            <div class="theme-option" data-theme="sublime" onclick="UI.setTheme('sublime')" style="padding: 12px; border-radius: 12px; border: 2px solid var(--border); cursor: pointer; text-align: center; transition: all 0.2s; background: #272822;">
-              <div style="font-size: 12px; font-weight: 700; color: #A6E22E;">Sublime</div>
-            </div>
           </div>
         </div>
         <div class="settings-group mt-3">
@@ -475,51 +444,11 @@
     </div>
   </div>
 
-  <div class="modal-overlay" id="shortcuts-modal" onclick="UI.closeModalOutside(event,'shortcuts-modal')">
-    <div class="modal" style="width:460px; max-width:95%;">
-      <div class="modal-header">
-        <div class="modal-title">اختصارات لوحة المفاتيح</div>
-        <button onclick="UI.closeModal('shortcuts-modal')" class="icon-btn"><i data-lucide="x" style="width:20px;height:20px"></i></button>
-      </div>
-      <div class="modal-body" style="padding: 16px 24px;">
-        <div class="shortcut-row">
-          <span>محادثة جديدة</span>
-          <div class="shortcut-keys"><span class="kbd">Ctrl</span><span class="kbd">N</span></div>
-        </div>
-        <div class="shortcut-row">
-          <span>وضع التركيز (Zen)</span>
-          <div class="shortcut-keys"><span class="kbd">Ctrl</span><span class="kbd">Shift</span><span class="kbd">Z</span></div>
-        </div>
-        <div class="shortcut-row">
-          <span>فتح الإعدادات</span>
-          <div class="shortcut-keys"><span class="kbd">Ctrl</span><span class="kbd">,</span></div>
-        </div>
-        <div class="shortcut-row">
-          <span>فتح/إغلاق المحادثات</span>
-          <div class="shortcut-keys"><span class="kbd">Ctrl</span><span class="kbd">B</span></div>
-        </div>
-        <div class="shortcut-row">
-          <span>تبديل المظهر</span>
-          <div class="shortcut-keys"><span class="kbd">Ctrl</span><span class="kbd">D</span></div>
-        </div>
-        <div class="shortcut-row">
-          <span>إرسال الرسالة</span>
-          <div class="shortcut-keys"><span class="kbd">Enter</span></div>
-        </div>
-        <div class="shortcut-row">
-          <span>سطر جديد</span>
-          <div class="shortcut-keys"><span class="kbd">Shift</span><span class="kbd">Enter</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="toast-container" id="toast-container"></div>
 
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <script src="js/ui.js"></script>
   <script src="js/editor.js"></script>
