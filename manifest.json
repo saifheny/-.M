@@ -1,0 +1,30 @@
+{
+  "name": "AI Agent Pro — منصة الذكاء الاصطناعي",
+  "short_name": "AI Agent Pro",
+  "description": "أقوى منصة ذكاء اصطناعي عربية 2026 — محادثات ذكية، محرر أكواد، تحليل ملفات وتسجيل صوتي مع GPT-5.5 و Gemini 3.1 و Claude Opus 4.7",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "window-controls-overlay"],
+  "orientation": "any",
+  "background_color": "#000000",
+  "theme_color": "#3B82F6",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["productivity", "utilities", "developer"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
