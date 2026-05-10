@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="AI Agent Pro — تسجيل الدخول إلى أقوى منصة ذكاء اصطناعي عربية 2026">
+  <meta name="theme-color" content="#030712">
+  <title>AI Agent Pro — تسجيل الدخول</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #030712;
+      --text: #f9fafb;
+      --text2: #d1d5db;
+      --text3: #9ca3af;
+      --accent: #3b82f6;
+      --accent2: #8b5cf6;
+      --border: rgba(255, 255, 255, 0.1);
+      --glass: rgba(17, 24, 39, 0.6);
+      --red: #ef4444;
+      --green: #10b981;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+
+    /* === SPLIT LAYOUT === */
+    .login-split {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* LEFT PANEL - Branding */
+    .login-brand {
+      flex: 1.2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% 30%, rgba(59,130,246,0.22) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 70%, rgba(139,92,246,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 50% 5%, rgba(16,185,129,0.1) 0%, transparent 55%),
+        #030712;
+    }
+    .login-brand::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(3,7,18,0.7) 0%, rgba(3,7,18,0.3) 100%);
+      z-index: 0;
+    }
+    .login-brand::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 44px 44px;
+      z-index: 0;
+      animation: gridMove 25s linear infinite;
+    }
+    @keyframes gridMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 44px 44px; }
+    }
+    .brand-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 420px;
+      padding: 40px;
+    }
+    .brand-logo {
+      width: 100px;
+      height: 100px;
+      border-radius: 28px;
+      background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(139,92,246,0.2));
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 32px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 60px rgba(59,130,246,0.2);
+      animation: logoFloat 4s ease-in-out infinite;
+    }
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .brand-title {
+      font-size: 42px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #fff 40%, rgba(255,255,255,0.5));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .brand-sub {
+      font-size: 16px;
+      color: var(--text3);
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+    .brand-features {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-align: right;
+    }
+    .brand-feature {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+    }
+    .brand-feature:hover {
+      background: rgba(255,255,255,0.08);
+      transform: translateX(-4px);
+      border-color: rgba(79,142,247,0.2);
+    }
+    .brand-feature-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+    .brand-feature span {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text2);
+    }
+    .floating-cards {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .card {
+      position: absolute;
+      width: 140px; height: 180px;
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.05);
+      animation: floatRandom 15s infinite linear alternate;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+      border-radius: 24px;
+    }
+    .card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.1), transparent 70%);
+      border-radius: 24px;
+    }
+    .card-1 { top: 10%; left: 15%; animation-delay: 0s; border-color: rgba(59,130,246,0.3); }
+    .card-2 { bottom: 15%; right: 10%; animation-delay: -3s; width: 120px; height: 160px; border-color: rgba(139,92,246,0.3); }
+    .card-3 { top: 60%; left: 60%; animation-delay: -7s; width: 100px; height: 140px; border-color: rgba(236,72,153,0.3); }
+    .card-4 { top: 20%; right: 25%; animation-delay: -11s; border-color: rgba(52,211,153,0.3); }
+    @keyframes floatRandom {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      25% { transform: translate(40px, -30px) rotate(15deg); }
+      50% { transform: translate(-30px, 40px) rotate(-10deg); }
+      75% { transform: translate(30px, 30px) rotate(5deg); }
+      100% { transform: translate(-20px, -40px) rotate(-5deg); }
+    }
+
+    /* RIGHT PANEL - Form */
+    .login-form-panel {
+      width: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(9,9,11,0.95);
+      border-right: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+      overflow-y: auto;
+    }
+    .login-form-inner {
+      width: 100%;
+      max-width: 400px;
+      padding: 48px 40px;
+    }
+    .form-logo-mobile {
+      display: none;
+      width: 60px;
+      height: 60px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(139,92,246,0.15));
+      border: 1px solid rgba(255,255,255,0.12);
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .form-title {
+      font-size: 28px;
+      font-weight: 900;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #fff 60%, rgba(255,255,255,0.6));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .form-sub {
+      color: var(--text3);
+      font-size: 14px;
+      margin-bottom: 36px;
+    }
+    .social-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .btn-social {
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      color: #fff;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .btn-social:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(79,142,247,0.35);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(59,130,246,0.15);
+    }
+    .btn-social:active { transform: scale(0.97); opacity: 0.85; }
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      background: #fff;
+      color: #000;
+      border: none;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s;
+      box-shadow: 0 8px 25px rgba(255,255,255,0.08);
+    }
+    .btn-submit:hover { background: #f3f4f6; transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255,255,255,0.12); }
+    .btn-submit:active { transform: scale(0.98); }
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 28px 0;
+      color: var(--text3);
+      font-size: 13px;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .input-group { margin-bottom: 14px; }
+    .f-input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.3);
+      color: #fff;
+      font-family: inherit;
+      font-size: 15px;
+      outline: none;
+      transition: all 0.25s;
+    }
+    .f-input:focus {
+      border-color: var(--accent);
+      background: rgba(0,0,0,0.5);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.15), 0 0 20px rgba(59,130,246,0.06);
+    }
+    .f-input::placeholder { color: var(--text3); }
+    .toggle-text {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 14px;
+      color: var(--text3);
+    }
+    .toggle-text a { color: var(--accent); text-decoration: none; font-weight: 700; cursor: pointer; transition: color 0.2s; }
+    .toggle-text a:hover { color: #60a5fa; }
+    .err-box {
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.2);
+      color: #fca5a5;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      margin-bottom: 16px;
+      display: none;
+      text-align: center;
+      animation: shakeIn 0.3s ease;
+    }
+    @keyframes shakeIn {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+    .spinner {
+      display: none;
+      width: 28px;
+      height: 28px;
+      border: 3px solid rgba(255,255,255,0.1);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 16px auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .terms-row {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--text3);
+      line-height: 1.8;
+    }
+    .terms-row a { color: var(--accent); text-decoration: none; }
+    .terms-row a:hover { text-decoration: underline; }
+
+    /* MOBILE */
+    @media (max-width: 900px) {
+      .login-split { flex-direction: column; }
+      .login-brand { display: none; }
+      .login-form-panel {
+        width: 100%;
+        flex: 1;
+        background:
+          radial-gradient(circle at 20% 20%, rgba(59,130,246,0.12), transparent 50%),
+          radial-gradient(circle at 80% 80%, rgba(139,92,246,0.1), transparent 50%),
+          var(--bg);
+        border: none;
+      }
+      .login-form-inner {
+        max-width: 100%;
+        padding: 32px 24px;
+      }
+      .form-logo-mobile { display: flex; }
+      .form-title { font-size: 24px; text-align: center; }
+      .form-sub { text-align: center; margin-bottom: 28px; }
+    }
+
+    /* Card animation */
+    .login-form-inner {
+      animation: formSlide 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      padding-bottom: max(48px, env(safe-area-inset-bottom));
+    }
+    @keyframes formSlide {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .strength-bar { margin-top:6px; display:none; }
+    .strength-track { height:3px; border-radius:2px; background:rgba(255,255,255,0.07); overflow:hidden; }
+    .strength-fill { height:100%; width:0%; transition:all 0.4s ease; border-radius:2px; }
+    .strength-text { font-size:11px; color:#6b7280; margin-top:5px; display:block; }
+    .pass-wrapper { position:relative; }
+    .pass-toggle { position:absolute; left:14px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:#6b7280; padding:4px; display:flex; transition:color 0.2s; }
+    .pass-toggle:hover { color:#d1d5db; }
+    .theme-toggle { position:fixed; top:20px; left:20px; width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:100; transition:all 0.3s; color:#9ca3af; }
+    .theme-toggle:hover { background:rgba(255,255,255,0.1); color:#fff; transform:scale(1.08); }
+    .kbd-hint { text-align:center; margin-top:8px; font-size:11px; color:#4b5563; }
+    .kbd-hint kbd { background:rgba(255,255,255,0.06); padding:2px 7px; border-radius:5px; border:1px solid rgba(255,255,255,0.1); font-family:monospace; font-size:11px; }
+    .card-inner { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; padding:16px; }
+    .card-inner svg { opacity:0.7; }
+    .card-inner span { font-size:11px; font-weight:700; color:rgba(255,255,255,0.5); letter-spacing:1px; text-transform:uppercase; }
+    .card-live { width:7px; height:7px; border-radius:50%; background:#10b981; position:absolute; top:12px; left:12px; box-shadow:0 0 8px rgba(16,185,129,0.6); animation:livePulse 2s infinite; }
+    @keyframes livePulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="toggleTheme()" title="تغيير الثيم">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+  </button>
+  <div class="login-split">
+    <!-- LEFT: Branding Panel (Desktop only) -->
+    <div class="login-brand">
+      <div class="floating-cards">
+        <div class="card card-1">
+          <div class="card-live"></div>
+          <div class="card-inner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="1.5" width="32" height="32"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 15v-2M16 15v-2"/></svg>
+            <span>AI Models</span>
+          </div>
+        </div>
+        <div class="card card-2">
+          <div class="card-live"></div>
+          <div class="card-inner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.5" width="28" height="28"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg>
+            <span>Code Editor</span>
+          </div>
+        </div>
+        <div class="card card-3">
+          <div class="card-live"></div>
+          <div class="card-inner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#f9a8d4" stroke-width="1.5" width="24" height="24"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3M8 22h8"/></svg>
+            <span>Voice AI</span>
+          </div>
+        </div>
+        <div class="card card-4">
+          <div class="card-live"></div>
+          <div class="card-inner">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="1.5" width="28" height="28"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+            <span>Analytics</span>
+          </div>
+        </div>
+      </div>
+      <div class="brand-content">
+        <div class="brand-logo">
+          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:52px;height:52px">
+            <rect width="60" height="60" rx="16" fill="url(#loginGrad)"/>
+            <path d="M13 44 L20 18 L30 40 L40 18 L47 44" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <circle cx="30" cy="30" r="3.5" fill="white" opacity="0.5"/>
+            <defs>
+              <linearGradient id="loginGrad" x1="0" y1="0" x2="60" y2="60">
+                <stop offset="0%" stop-color="#3B82F6"/>
+                <stop offset="100%" stop-color="#8B5CF6"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <h1 class="brand-title">AI Agent Pro</h1>
+        <p class="brand-sub">أقوى منصة ذكاء اصطناعي عربية — محادثات ذكية، برمجة، تحليل، وأكثر من 30 نموذج AI</p>
+        <div class="brand-features">
+          <div class="brand-feature">
+            <div class="brand-feature-icon" style="background:rgba(59,130,246,0.15);color:#60a5fa;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 15v-2M16 15v-2"/></svg>
+            </div>
+            <span>دعم GPT-5.5, Gemini 3.1, Claude وأكثر</span>
+          </div>
+          <div class="brand-feature">
+            <div class="brand-feature-icon" style="background:rgba(139,92,246,0.15);color:#a78bfa;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <span>محرر أكواد متقدم مع معاينة فورية</span>
+          </div>
+          <div class="brand-feature">
+            <div class="brand-feature-icon" style="background:rgba(16,185,129,0.15);color:#34d399;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3M8 22h8"/></svg>
+            </div>
+            <span>رسائل صوتية ذكية مع تحليل AI</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Form Panel -->
+    <div class="login-form-panel">
+      <div class="login-form-inner">
+        <div class="form-logo-mobile">
+          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:44px;height:44px">
+            <rect width="60" height="60" rx="14" fill="url(#mobGrad)"/>
+            <path d="M13 44 L20 18 L30 40 L40 18 L47 44" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <circle cx="30" cy="30" r="3" fill="white" opacity="0.5"/>
+            <defs>
+              <linearGradient id="mobGrad" x1="0" y1="0" x2="60" y2="60">
+                <stop offset="0%" stop-color="#3B82F6"/>
+                <stop offset="100%" stop-color="#8B5CF6"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+
+        <h2 class="form-title" id="fTitle">تسجيل الدخول</h2>
+        <p class="form-sub">أهلاً بك في أقوى منصة ذكاء اصطناعي عربية</p>
+
+        <div class="err-box" id="errBox"></div>
+
+        <div class="social-btns">
+          <button class="btn-social" onclick="doGoogle()" id="gBtn">
+            <svg viewBox="0 0 24 24" style="width:20px;height:20px"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            المتابعة مع Google
+          </button>
+          <button class="btn-social" onclick="doGuest()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;height:20px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            الدخول كزائر
+          </button>
+        </div>
+
+        <div class="divider">أو عبر البريد الإلكتروني</div>
+
+        <div id="nameWrap" style="display:none" class="input-group">
+          <input class="f-input" placeholder="الاسم الكامل" id="fName">
+        </div>
+        <div class="input-group">
+          <input class="f-input" placeholder="البريد الإلكتروني" id="fEmail" type="email">
+        </div>
+        <div class="input-group">
+          <div class="pass-wrapper">
+            <input class="f-input" type="password" placeholder="كلمة المرور" id="fPass" style="padding-left:44px;">
+            <button class="pass-toggle" type="button" onclick="togglePass()" id="passToggle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" id="eyeIcon"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          <div class="strength-bar" id="strengthBar">
+            <div class="strength-track"><div class="strength-fill" id="strengthFill"></div></div>
+            <span class="strength-text" id="strengthText"></span>
+          </div>
+        </div>
+
+        <button class="btn-submit" onclick="doEmail()" id="subBtn">تسجيل الدخول</button>
+        <div class="kbd-hint">اضغط <kbd>Enter</kbd> للدخول السريع</div>
+        <div class="spinner" id="spinner"></div>
+
+        <div class="toggle-text">
+          <span id="togTxt">ليس لديك حساب؟</span>
+          <a onclick="togMode()" id="togLnk">إنشاء حساب جديد</a>
+        </div>
+        <div class="terms-row">بتسجيل الدخول، أنت توافق على <a href="terms.html">شروط الاستخدام</a> و<a href="privacy.html">سياسة الخصوصية</a></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  <script>
+    firebase.initializeApp({
+      apiKey:"AIzaSyAjE-2q6PONBkCin9ZN22gDp9Q8pAH9ZW8",
+      authDomain:"story-97cf7.firebaseapp.com",
+      databaseURL:"https://story-97cf7-default-rtdb.firebaseio.com",
+      projectId:"story-97cf7",
+      storageBucket:"story-97cf7.firebasestorage.app",
+      messagingSenderId:"742801388214",
+      appId:"1:742801388214:web:32a305a8057b0582c5ec17"
+    });
+    const auth = firebase.auth();
+    auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+    let isReg=false;
+    function togMode(){
+      isReg=!isReg;
+      document.getElementById('fTitle').textContent=isReg?'إنشاء حساب جديد':'تسجيل الدخول';
+      document.getElementById('nameWrap').style.display=isReg?'block':'none';
+      document.getElementById('subBtn').textContent=isReg?'إنشاء الحساب':'تسجيل الدخول';
+      document.getElementById('togTxt').textContent=isReg?'لديك حساب؟':'ليس لديك حساب؟';
+      document.getElementById('togLnk').textContent=isReg?'تسجيل الدخول':'إنشاء حساب جديد';
+      hideErr();
+    }
+    function showErr(m){const e=document.getElementById('errBox');e.textContent=m;e.style.display='block'}
+    function hideErr(){document.getElementById('errBox').style.display='none'}
+    function saveUser(u){
+      localStorage.setItem('ai_user',JSON.stringify({
+        type:u.isAnonymous?'guest':(u.providerData[0]?.providerId||'email'),
+        name:u.displayName||u.email?.split('@')[0]||'مستخدم',
+        avatar:(u.displayName||u.email||'U')[0].toUpperCase(),
+        photo:u.photoURL||null,uid:u.uid,email:u.email||null
+      }));
+      localStorage.setItem('ai_logged_in','true');
+    }
+    function goTerms(u){
+      saveUser(u);
+      if(localStorage.getItem('terms_accepted')==='true'){
+        window.location.href='index.html';
+      } else {
+        window.location.href='terms.html?accept=1';
+      }
+    }
+    async function doGoogle(){
+      hideErr();
+      const b=document.getElementById('gBtn');b.disabled=true;
+      try{
+        const p=new firebase.auth.GoogleAuthProvider();
+        p.setCustomParameters({prompt:'select_account'});
+        try {
+          const r=await auth.signInWithPopup(p);
+          goTerms(r.user);
+        } catch(popupErr) {
+          if(popupErr.code==='auth/popup-blocked'||popupErr.code==='auth/cancelled-popup-request'){
+            await auth.signInWithRedirect(p);
+          } else throw popupErr;
+        }
+      }catch(e){
+        if(e.code!=='auth/popup-closed-by-user') showErr(errMsg(e.code));
+      }finally{b.disabled=false}
+    }
+    auth.getRedirectResult().then(r=>{
+      if(r.user) goTerms(r.user);
+    }).catch(()=>{});
+    function doGuest(){
+      hideErr();
+      localStorage.setItem('ai_user',JSON.stringify({
+        type:'guest',name:'زائر',avatar:'Z',photo:null,
+        uid:'guest_'+Date.now(),email:null
+      }));
+      localStorage.setItem('ai_logged_in','true');
+      localStorage.setItem('terms_accepted','true');
+      window.location.href='index.html';
+    }
+    async function doEmail(){
+      hideErr();
+      const em=document.getElementById('fEmail').value.trim();
+      const pw=document.getElementById('fPass').value;
+      const nm=document.getElementById('fName')?.value?.trim();
+      if(!em){showErr('يرجى إدخال البريد الإلكتروني');return}
+      if(!pw||pw.length<6){showErr('كلمة المرور يجب أن تكون 6 أحرف على الأقل');return}
+      document.getElementById('subBtn').style.display='none';
+      document.getElementById('spinner').style.display='block';
+      try{
+        let r;
+        if(isReg){r=await auth.createUserWithEmailAndPassword(em,pw);if(nm)await r.user.updateProfile({displayName:nm})}
+        else{r=await auth.signInWithEmailAndPassword(em,pw)}
+        goTerms(r.user);
+      }catch(e){
+        document.getElementById('subBtn').style.display='flex';
+        document.getElementById('spinner').style.display='none';
+        showErr(errMsg(e.code));
+      }
+    }
+    function errMsg(c){
+      return{'auth/user-not-found':'لا يوجد حساب بهذا البريد','auth/wrong-password':'كلمة المرور غير صحيحة','auth/invalid-credential':'بيانات الدخول غير صحيحة','auth/email-already-in-use':'البريد مستخدم بالفعل','auth/weak-password':'كلمة المرور ضعيفة','auth/invalid-email':'بريد غير صالح','auth/too-many-requests':'محاولات كثيرة، حاول لاحقاً','auth/network-request-failed':'خطأ في الاتصال','auth/popup-blocked':'تم حظر النافذة المنبثقة، جاري التحويل...','auth/operation-not-allowed':'هذه الطريقة غير مفعلة في Firebase Console'}[c]||'حدث خطأ: '+c}
+    document.getElementById('fPass').addEventListener('keydown',e=>{if(e.key==='Enter')doEmail()});
+
+    // Password toggle
+    function togglePass() {
+      const inp = document.getElementById('fPass');
+      const icon = document.getElementById('eyeIcon');
+      if (inp.type === 'password') {
+        inp.type = 'text';
+        icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>';
+      } else {
+        inp.type = 'password';
+        icon.innerHTML = '<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>';
+      }
+    }
+
+    // Password strength
+    document.getElementById('fPass').addEventListener('input', function() {
+      if (!isReg) return;
+      const v = this.value;
+      const bar = document.getElementById('strengthBar');
+      const fill = document.getElementById('strengthFill');
+      const txt = document.getElementById('strengthText');
+      bar.style.display = v.length ? 'block' : 'none';
+      let score = 0;
+      if (v.length >= 8) score++;
+      if (/[A-Z]/.test(v)) score++;
+      if (/[0-9]/.test(v)) score++;
+      if (/[^A-Za-z0-9]/.test(v)) score++;
+      const lvl = [{w:'20%',c:'#ef4444',t:'ضعيفة جداً'},{w:'40%',c:'#f97316',t:'ضعيفة'},{w:'65%',c:'#eab308',t:'متوسطة'},{w:'85%',c:'#22c55e',t:'قوية'},{w:'100%',c:'#10b981',t:'قوية جداً ✓'}];
+      const l = lvl[Math.min(score, 4)];
+      fill.style.width = l.w; fill.style.background = l.c;
+      txt.textContent = 'قوة كلمة المرور: ' + l.t; txt.style.color = l.c;
+    });
+
+    // Theme toggle
+    let isDark = true;
+    function toggleTheme() {
+      isDark = !isDark;
+      const r = document.documentElement;
+      if (!isDark) {
+        r.style.setProperty('--bg', '#f1f5f9');
+        r.style.setProperty('--text', '#0f172a');
+        r.style.setProperty('--text2', '#334155');
+        r.style.setProperty('--text3', '#64748b');
+        r.style.setProperty('--glass', 'rgba(255,255,255,0.85)');
+        r.style.setProperty('--border', 'rgba(0,0,0,0.1)');
+        document.querySelector('.login-form-panel').style.background = 'rgba(248,250,252,0.98)';
+      } else {
+        r.style.setProperty('--bg', '#030712');
+        r.style.setProperty('--text', '#f9fafb');
+        r.style.setProperty('--text2', '#d1d5db');
+        r.style.setProperty('--text3', '#9ca3af');
+        r.style.setProperty('--glass', 'rgba(17,24,39,0.6)');
+        r.style.setProperty('--border', 'rgba(255,255,255,0.1)');
+        document.querySelector('.login-form-panel').style.background = 'rgba(9,9,11,0.95)';
+      }
+    }
+    
+    auth.onAuthStateChanged(u=>{
+      if(u&&localStorage.getItem('ai_logged_in')==='true'&&localStorage.getItem('terms_accepted')==='true'){
+        window.location.href='index.html';
+      }
+    });
+  </script>
+</body>
+</html>
