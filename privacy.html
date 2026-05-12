@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>سياسة الخصوصية — AI Agent Pro</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter', -apple-system, system-ui, sans-serif;background:#000;color:#E5E5E5;line-height:1.9;min-height:100vh}
+    .back-btn{position:fixed;top:24px;right:24px;z-index:100;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);background:rgba(15,15,15,0.8);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;box-shadow:0 0 20px rgba(16,185,129,0.15),0 0 60px rgba(16,185,129,0.05);text-decoration:none}
+    .back-btn:hover{box-shadow:0 0 30px rgba(16,185,129,0.3),0 0 80px rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.4);transform:scale(1.08)}
+    .back-btn svg{width:20px;height:20px;color:#6EE7B7}
+    .hero{padding:100px 24px 60px;text-align:center;background:linear-gradient(180deg,rgba(16,185,129,0.08) 0%,transparent 100%),radial-gradient(ellipse 60% 40% at 50% 0%,rgba(16,185,129,0.12) 0%,transparent 70%);border-bottom:1px solid rgba(255,255,255,0.04);position:relative;}
+    .hero-icon{width:80px;height:80px;margin:0 auto 20px;border-radius:24px;background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(6,182,212,0.15));border:1px solid rgba(16,185,129,0.2);display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(16,185,129,0.15)}
+    .hero-icon svg{width:36px;height:36px;color:#6EE7B7}
+    .hero h1{font-size:36px;font-weight:900;margin-bottom:8px;background:linear-gradient(135deg,#fff,#a3a3a3);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .hero p{color:#737373;font-size:14px}
+    .hero .badge{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:6px 14px;border-radius:20px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);font-size:12px;color:#6EE7B7}
+    .container{max-width:800px;margin:0 auto;padding:40px 24px 80px}
+    .section{margin-bottom:40px;padding:28px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:20px;transition:border-color .3s}
+    .section:hover{border-color:rgba(16,185,129,0.15)}
+    .section-header{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+    .section-icon{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .section-icon svg{width:22px;height:22px}
+    .section-icon.green{background:rgba(16,185,129,0.12);color:#6EE7B7}
+    .section-icon.blue{background:rgba(59,130,246,0.12);color:#60A5FA}
+    .section-icon.purple{background:rgba(139,92,246,0.12);color:#A78BFA}
+    .section-icon.red{background:rgba(239,68,68,0.12);color:#FCA5A5}
+    .section-icon.cyan{background:rgba(6,182,212,0.12);color:#67E8F9}
+    .section-icon.yellow{background:rgba(245,158,11,0.12);color:#FCD34D}
+    .section-icon.pink{background:rgba(236,72,153,0.12);color:#F9A8D4}
+    .section h2{font-size:20px;font-weight:800;color:#fff}
+    .section ul{list-style:none;padding:0}
+    .section ul li{padding:8px 0;padding-right:24px;position:relative;color:#d4d4d4;font-size:14px}
+    .section ul li::before{content:'';position:absolute;right:0;top:16px;width:8px;height:8px;border-radius:50%;background:rgba(16,185,129,0.5)}
+    .section p{color:#d4d4d4;font-size:14px;margin-bottom:8px}
+    .highlight{background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.15);border-radius:14px;padding:16px 20px;margin:12px 0;font-size:13px;color:#A7F3D0;display:flex;align-items:flex-start;gap:12px}
+    .highlight svg{width:20px;height:20px;flex-shrink:0;margin-top:2px;color:#6EE7B7}
+    .footer{text-align:center;padding:40px 24px;color:#525252;font-size:12px;border-top:1px solid rgba(255,255,255,0.04)}
+    @media(max-width:768px){
+      .hero{padding:80px 20px 40px}
+      .hero h1{font-size:26px}
+      .container{padding:24px 16px 60px}
+      .section{padding:20px}
+      .back-btn{top:16px;right:16px;width:42px;height:42px}
+    }
+  </style>
+</head>
+<body>
+  <div id="readProgress" style="position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#10B981,#06B6D4);width:0%;z-index:9999;transition:width 0.1s;border-radius:0 2px 2px 0;"></div>
+  <a href="login.html" class="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+  </a>
+  <button id="doneBtn" style="display:none;position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#10B981,#06B6D4);color:#000;font-family:inherit;font-weight:800;font-size:14px;padding:14px 32px;border:none;border-radius:14px;cursor:pointer;box-shadow:0 8px 30px rgba(16,185,129,0.35);z-index:200;white-space:nowrap;">✓ فهمت — العودة للتطبيق</button>
+  <div class="hero">
+    <div class="hero-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></div>
+    <h1>سياسة الخصوصية</h1>
+    <p>آخر تحديث: مايو 2026</p>
+    <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg> سياسة صارمة — مؤسسة SA</div>
+  </div>
+  <div class="container">
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></div>
+        <h2>1. التزامنا بالخصوصية</h2>
+      </div>
+      <p>نحن في مؤسسة SA نلتزم التزاماً صارماً بحماية خصوصية مستخدمينا. هذه السياسة توضح كيفية جمع واستخدام وحماية بياناتك الشخصية عند استخدام منصة AI Agent Pro.</p>
+      <div class="highlight">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+        <span>نحن لا نبيع بياناتك أبداً. خصوصيتك أولوية قصوى وحق أساسي نلتزم بحمايته.</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h2>2. البيانات التي نجمعها</h2>
+      </div>
+      <ul>
+        <li><strong>بيانات الحساب:</strong> الاسم، البريد الإلكتروني، صورة الملف الشخصي (عبر Google Sign-In)</li>
+        <li><strong>بيانات الاستخدام:</strong> عدد الرسائل، النماذج المستخدمة، الإحصائيات العامة</li>
+        <li><strong>المحادثات:</strong> تُخزن محلياً على جهازك فقط (localStorage) ولا تُرسل لخوادمنا</li>
+        <li><strong>المحادثات المشتركة:</strong> عند مشاركة محادثة، تُرفع مؤقتاً لـ Firebase وتُحذف فور استلامها</li>
+        <li><strong>مفاتيح API:</strong> تُحفظ محلياً على جهازك ولا نصل إليها أبداً</li>
+      </ul>
+      <div class="highlight">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span>مفاتيح API الخاصة بك لا تغادر جهازك أبداً. نحن نستخدم معمارية Local-First لأقصى حماية.</span>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+        <h2>3. كيف نستخدم بياناتك</h2>
+      </div>
+      <ul>
+        <li>تحسين تجربة المستخدم وأداء المنصة</li>
+        <li>إدارة حسابك وتوفير الدعم الفني</li>
+        <li>تحليلات مجهولة الهوية لتطوير المنصة (Google Analytics)</li>
+        <li>لا نستخدم بياناتك لأغراض إعلانية أبداً</li>
+        <li>لا نشارك بياناتك مع أي طرف ثالث</li>
+      </ul>
+    </div>
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <h2>4. أمان البيانات</h2>
+      </div>
+      <ul>
+        <li>نستخدم Firebase Authentication لتوثيق آمن ومشفر</li>
+        <li>جميع الاتصالات مشفرة عبر HTTPS/TLS</li>
+        <li>المحادثات المشتركة تُشفر أثناء النقل وتُحذف فور الاستلام</li>
+        <li>نطبق مبدأ "الحد الأدنى من البيانات" — نجمع فقط ما هو ضروري</li>
+        <li>نراجع إجراءاتنا الأمنية دورياً وفق معايير مؤسسة SA</li>
+      </ul>
+    </div>
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg></div>
+        <h2>5. حقوقك</h2>
+      </div>
+      <ul>
+        <li><strong>حق الوصول:</strong> يمكنك طلب نسخة من بياناتك في أي وقت</li>
+        <li><strong>حق التصحيح:</strong> يمكنك تعديل بياناتك الشخصية</li>
+        <li><strong>حق الحذف:</strong> يمكنك طلب حذف حسابك وجميع بياناتك نهائياً</li>
+        <li><strong>حق الاعتراض:</strong> يمكنك الاعتراض على أي معالجة لبياناتك</li>
+        <li><strong>حق النقل:</strong> يمكنك تصدير محادثاتك بصيغ JSON أو Markdown أو PDF</li>
+      </ul>
+    </div>
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg></div>
+        <h2>6. تحديثات السياسة</h2>
+      </div>
+      <p>قد نقوم بتحديث هذه السياسة من وقت لآخر. سنُخطرك بأي تغييرات جوهرية عبر إشعار داخل المنصة. استمرارك في استخدام المنصة يعني موافقتك على السياسة المحدّثة.</p>
+    </div>
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <h2>7. التواصل</h2>
+      </div>
+      <p>لأي استفسارات حول سياسة الخصوصية أو لممارسة حقوقك، يُرجى التواصل معنا عبر:</p>
+      <ul>
+        <li>البريد الإلكتروني: privacy@sa-foundation.org</li>
+        <li>الدعم الفني داخل المنصة</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer">© 2026 AI Agent Pro — مؤسسة SA. جميع الحقوق محفوظة. سياسة خصوصية صارمة ومُلزمة.</div>
+  <script>
+    const prog = document.getElementById('readProgress');
+    const done = document.getElementById('doneBtn');
+    window.addEventListener('scroll', () => {
+      const el = document.documentElement;
+      const pct = el.scrollTop / (el.scrollHeight - el.clientHeight);
+      prog.style.width = (pct * 100) + '%';
+      done.style.display = pct > 0.88 ? 'block' : 'none';
+    });
+    done.onclick = () => window.location.href = 'login.html';
+  </script>
+</body>
+</html>
